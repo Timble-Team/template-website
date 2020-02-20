@@ -1,0 +1,32 @@
+{
+  "name": "template-website",
+  "version": "1.0.0",
+  "description": "My peachy Nuxt.js project",
+  "author": "quan do",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon src/server/index.js --watch server",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production node src/server/index.js",
+    "generate": "nuxt generate",
+    "build:firebase": "npm run clean && npm run build && npm run copy && cd functions && npm i",
+    "clean": "npm run clean:public && npm run clean:functions && npm run clean:static",
+    "clean:functions": "rimraf \"functions/node_modules\" && rimraf \"functions/.nuxt\"",
+    "clean:public": "rimraf \"public/**/*.*!(md)\" && rimraf \"public/_nuxt\"",
+    "clean:static": "rimraf \"src/static/sw.js\"",
+    "copy": "npm run copy:nuxt && npm run copy:static",
+    "copy:nuxt": "mkdir public/_nuxt && cp -r functions/.nuxt/dist/* public/_nuxt",
+    "copy:static": "cp -r src/static/* public",
+    "start:firebase": "firebase serve --only functions,hosting",
+    "deploy": "firebase deploy --only functions,hosting"
+  },
+  "dependencies": {
+    "nuxt": "^2.0.0",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9",
+    "@nuxtjs/vuetify": "^1.0.0"
+  }
+}
